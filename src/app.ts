@@ -7,6 +7,7 @@ import HttpStatus from "http-status";
 import bcrypt from "bcryptjs";
 import { userRoutes } from "./modules/user/user.route";
 import { authRoutes } from "./modules/auth/auth.route";
+import { techniciansRoutes } from "./modules/technicians/technicians.route";
 
 
 const app: Application = express();
@@ -33,6 +34,10 @@ app.use("/api/auth", userRoutes)
 
 // Login API
 app.use("/api/auth", authRoutes);
+
+
+// Technicians 
+app.use("/api/technicians", techniciansRoutes);
 
 
 
