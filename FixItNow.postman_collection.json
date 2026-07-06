@@ -1,0 +1,132 @@
+{
+  "info": {
+    "_postman_id": "3c26fe22-12d0-45b8-aa71-5510c1b94d08",
+    "name": "FixItNow",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "54899989",
+    "_collection_link": "https://go.postman.co/collection/54899989-3c26fe22-12d0-45b8-aa71-5510c1b94d08?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Ayan Sujon\",\r\n  \"email\": \"ayan1@example.com\",\r\n  \"password\": \"StrongPassword123!\",\r\n  \"phone\": \"+8801712345671\",\r\n  \"profilePhoto\": \"https://i.pravatar.cc/300?img=12\",\r\n  \"role\": \"TECHNICIAN\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"ayan@example.com\",\r\n  \"password\": \"StrongPassword123!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "Get My Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/auth/me",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update My Profile",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"bio\": \"Experienced electrician providing reliable home and commercial electrical services.\",\r\n  \"profilePhoto\": \"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400\",\r\n  \"description\": \"Specialized in electrical wiring, circuit breaker installation, lighting solutions, ceiling fan installation, and emergency electrical repairs.\",\r\n  \"profession\": \"ELECTRICIAN\",\r\n  \"serviceArea\": \"ELECTRICAL\",\r\n  \"yearsOfExperience\": 2,\r\n  \"hourlyRate\": 49.99,\r\n  \"isAvailable\": true,\r\n  \"address\": \"House 15, Road 5, Mirpur-10\",\r\n  \"city\": \"Dhaka\",\r\n  \"district\": \"Dhaka\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/my-profile",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "my-profile"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
