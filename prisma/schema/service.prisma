@@ -1,0 +1,36 @@
+model Service {
+    id String @id @default(uuid())
+
+    technicianId String
+    technician   User   @relation(fields: [technicianId], references: [id], onDelete: Cascade)
+
+    categoryId String
+    category   Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+
+    title       String
+    description String
+
+    price     Decimal   @db.Decimal(10, 2)
+    priceType PriceType @default(FIXED)
+
+    estimatedDuration Int? // Duration in minutes
+
+    serviceArea String?
+
+    thumbnail String?
+
+    isAvailable Boolean @default(true)
+
+    averageRating Float @default(0)
+    totalReviews  Int   @default(0)
+
+    // bookings Booking[]
+    // reviews  Review[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([technicianId])
+    @@index([categoryId])
+    @@map("services")
+}
