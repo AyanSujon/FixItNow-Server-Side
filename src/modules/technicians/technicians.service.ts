@@ -47,14 +47,15 @@ const getAlltechniciansFromDB = async (filters: TechnicianFilters) => {
     where: {
       role: Role.TECHNICIAN,
       technicianProfile: {
+        isApproved: true, 
         ...(filters.city && { city: filters.city }),
         ...(filters.profession && { profession: filters.profession }),
         ...(filters.available !== undefined && {
           isAvailable: filters.available,
         }),
-        ...(filters.approved !== undefined && {
-          isApproved: filters.approved,
-        }),
+        // ...(filters.approved !== undefined && {
+        //   isApproved: filters.approved,
+        // }),
         ...(filters.minExperience && {
           yearsOfExperience: {
             gte: filters.minExperience,
