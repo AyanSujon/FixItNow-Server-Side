@@ -13,6 +13,7 @@ model User {
     updatedAt DateTime @updatedAt
 
     technicianProfile TechnicianProfile?
+    services Service[]
 
     @@map("users")
 }
