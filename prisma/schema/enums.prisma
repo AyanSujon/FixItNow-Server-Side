@@ -1,0 +1,112 @@
+
+enum ActiveStatus {
+    ACTIVE
+    BLOCKED
+}
+
+enum Role {
+    CUSTOMER
+    TECHNICIAN
+    ADMIN
+}
+
+enum Profession {
+    ELECTRICIAN
+    PLUMBER
+    CARPENTER
+    PAINTER
+    CLEANER
+    HVAC_TECHNICIAN
+    LANDSCAPER
+    ROOFER
+    APPLIANCE_REPAIR_TECHNICIAN
+    PEST_CONTROL_SPECIALIST
+    MOVING_SERVICES_PROVIDER
+    INTERIOR_DESIGNER
+    HOME_SECURITY_SPECIALIST
+    SMART_HOME_INSTALLER
+}
+
+enum ServiceType {
+    ELECTRICAL
+    PLUMBING
+    CARPENTRY
+    PAINTING
+    CLEANING
+    HVAC
+    LANDSCAPING
+    ROOFING
+    APPLIANCE_REPAIR
+    PEST_CONTROL
+    MOVING_SERVICES
+    INTERIOR_DESIGN
+    HOME_SECURITY
+    SMART_HOME_INSTALLATION
+}
+
+enum PriceType {
+  FIXED
+  HOURLY
+}
+
+
+
+enum BookingStatus {
+  REQUESTED
+  ACCEPTED
+  DECLINED
+  PAID
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  REFUNDED
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+enum PostStatus {
+    DRAFT
+    PUBLISHED
+    ARCHIVED 
+}
+
+
+enum CommentStatus {
+    APPROVED 
+    REJECT
+    
+}
