@@ -8,6 +8,7 @@ import bcrypt from "bcryptjs";
 import { userRoutes } from "./modules/user/user.route";
 import { authRoutes } from "./modules/auth/auth.route";
 import { techniciansRoutes } from "./modules/technicians/technicians.route";
+import { adminRoutes } from "./modules/admin/admin.route";
 
 
 const app: Application = express();
@@ -36,9 +37,12 @@ app.use("/api/auth", userRoutes)
 app.use("/api/auth", authRoutes);
 
 
-// Technicians 
+// Technicians (Public)
 app.use("/api/technicians", techniciansRoutes);
 
+
+// Admin ENDPOINT
+app.use("/api/admin", adminRoutes);
 
 
 

@@ -4,32 +4,6 @@ import { TechnicianFilters } from "./technicians.interface";
 
 
 
-// const getAlltechniciansFromDB = async () => {
-//     const technicians = await prisma.user.findMany({
-//         where: {
-//             role: Role.TECHNICIAN,
-//             technicianProfile: {
-//                 isApproved: true,
-//             }
-//         },
-//         omit: {
-//             password: true,
-//         },
-//         include: {
-//             technicianProfile: true,
-//         },
-//         orderBy: {
-//             createdAt: "desc"
-//         }
-//     });
-
-//     return technicians;
-// };
-
-
-
-
-
 
 
 // Filter By:
@@ -44,79 +18,85 @@ import { TechnicianFilters } from "./technicians.interface";
 // GET /api/technicians?page=4&limit=1 
 
 
+
 const getAlltechniciansFromDB = async (filters: TechnicianFilters) => {
-  // Pagination 
-  const page = Number(filters.page) || 1; 
-  const limit = Number(filters.limit) || 10; 
+  // Pagination
+  const page = Number(filters.page) || 1;
+  const limit = Number(filters.limit) || 10;
   const skip = (page - 1) * limit;
 
+  const where = {
+    role: Role.TECHNICIAN,
+    technicianProfile: {
+      ...(filters.city && {
+        city: {
+          equals: filters.city,
+          mode: "insensitive" as const,
+        },
+      }),
 
+      ...(filters.profession && {
+        profession: {
+          equals: filters.profession,
+        },
+      }),
 
-  const technicians = await prisma.user.findMany({
-    where: {
-      role: Role.TECHNICIAN,
-      technicianProfile: {
-        ...(filters.city && {
-          city: {
-            equals: filters.city,
-            mode: "insensitive",
-          },
-        }),
+      ...(filters.isAvailable !== undefined && {
+        isAvailable: filters.isAvailable,
+      }),
 
-        ...(filters.profession && {
-          profession: {
-            equals: filters.profession
-          },
-        }),
+      ...(filters.isApproved !== undefined && {
+        isApproved: filters.isApproved,
+      }),
 
-        ...(filters.isAvailable !== undefined && {
-          isAvailable: filters.isAvailable,
-        }),
+      ...(filters.minExperience && {
+        yearsOfExperience: {
+          gte: filters.minExperience,
+        },
+      }),
 
-        ...(filters.isApproved !== undefined && {
-          isApproved: filters.isApproved,
-        }),
+      ...(filters.minRating && {
+        averageRating: {
+          gte: filters.minRating,
+        },
+      }),
 
-        ...(filters.minExperience && {
-          yearsOfExperience: {
-            gte: filters.minExperience,
-          },
-        }),
-
-        ...(filters.minRating && {
-          averageRating: {
-            gte: filters.minRating,
-          },
-        }),
-
-        ...(filters.maxHourlyRate && {
-          hourlyRate: {
-            lte: filters.maxHourlyRate,
-          },
-        }),
-      },
+      ...(filters.maxHourlyRate && {
+        hourlyRate: {
+          lte: filters.maxHourlyRate,
+        },
+      }),
     },
+  };
+
+  // Total matching technicians
+  const total = await prisma.user.count({
+    where,
+  });
+
+  // Paginated technicians
+  const technicians = await prisma.user.findMany({
+    where,
     omit: {
       password: true,
     },
     include: {
       technicianProfile: true,
     },
-    skip: skip,
+    skip,
     take: limit,
-
   });
 
-
-  return {technicians, meta: {
-    page,
-    limit,
-    total: technicians.length,
-    totalPage: Math.ceil(technicians.length / limit),
-  }
-    }
+  return {
+    technicians,
+    meta: {
+      page,
+      limit,
+      total,
+      totalPage: Math.ceil(total / limit),
+    },
+  };
 };
-
 
 
 

@@ -1,59 +1,3 @@
-// import { NextFunction, Request, Response } from "express";
-// import { catchAsync } from "../../utils/catchAsync";
-// import { sendResponse } from "../../utils/sendResponse";
-// import HttpStatus from "http-status";
-// import { techniciansService } from "./technicians.service";
-
-
-// const getAlltechnicians = catchAsync(async(req: Request, res: Response, next: NextFunction)=> {
-//     const filters = req.query;
-//     console.log("filters", filters)
-
-    
-//     const technicians = await techniciansService.getAlltechniciansFromDB(filters);
-
-//     sendResponse(res, {
-//         success: true,
-//         statusCode: HttpStatus.OK, 
-//         message: "technicians profile fetched successfully.",
-//         data: {technicians}
-//     })
-
-
-// })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// export const techniciansController = {
-//     getAlltechnicians,
-
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 import { NextFunction, Request, Response } from "express";
@@ -106,7 +50,7 @@ const getAlltechnicians = catchAsync(
       success: true,
       statusCode: HttpStatus.OK,
       message: "technicians profile fetched successfully.",
-      data: { technicians },
+      data: technicians,
       meta: {
         ...meta
       }
