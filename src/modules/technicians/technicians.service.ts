@@ -7,7 +7,7 @@ import { TechnicianFilters } from "./technicians.interface";
 // const getAlltechniciansFromDB = async () => {
 //     const technicians = await prisma.user.findMany({
 //         where: {
-//             role: "TECHNICIAN",
+//             role: Role.TECHNICIAN,
 //             technicianProfile: {
 //                 isApproved: true,
 //             }
@@ -38,34 +38,57 @@ import { TechnicianFilters } from "./technicians.interface";
 // GET /api/technicians?profession=PLUMBER
 // GET /api/technicians?city=Dhaka&profession=PLUMBER
 // GET /api/technicians?isAvailable=true&isApproved=true
-// GET /api/technicians?minRating=4&minExperience=5
+// GET /api/technicians?minRating=3&minExperience=1
 // GET /api/technicians?city=Dhaka&profession=PLUMBER&isAvailable=true&page=1&limit=10
+// Pagination 
+// GET /api/technicians?page=4&limit=1 
 
 
 const getAlltechniciansFromDB = async (filters: TechnicianFilters) => {
+  // Pagination 
+  const page = Number(filters.page) || 1; 
+  const limit = Number(filters.limit) || 10; 
+  const skip = (page - 1) * limit;
+
+
+
   const technicians = await prisma.user.findMany({
     where: {
       role: Role.TECHNICIAN,
       technicianProfile: {
-        isApproved: true, 
-        ...(filters.city && { city: filters.city }),
-        ...(filters.profession && { profession: filters.profession }),
-        ...(filters.available !== undefined && {
-          isAvailable: filters.available,
+        ...(filters.city && {
+          city: {
+            equals: filters.city,
+            mode: "insensitive",
+          },
         }),
-        // ...(filters.approved !== undefined && {
-        //   isApproved: filters.approved,
-        // }),
+
+        ...(filters.profession && {
+          profession: {
+            equals: filters.profession
+          },
+        }),
+
+        ...(filters.isAvailable !== undefined && {
+          isAvailable: filters.isAvailable,
+        }),
+
+        ...(filters.isApproved !== undefined && {
+          isApproved: filters.isApproved,
+        }),
+
         ...(filters.minExperience && {
           yearsOfExperience: {
             gte: filters.minExperience,
           },
         }),
+
         ...(filters.minRating && {
           averageRating: {
             gte: filters.minRating,
           },
         }),
+
         ...(filters.maxHourlyRate && {
           hourlyRate: {
             lte: filters.maxHourlyRate,
@@ -79,10 +102,33 @@ const getAlltechniciansFromDB = async (filters: TechnicianFilters) => {
     include: {
       technicianProfile: true,
     },
+    skip: skip,
+    take: limit,
+
   });
 
-  return technicians;
+
+  return {technicians, meta: {
+    page,
+    limit,
+    total: technicians.length,
+    totalPage: Math.ceil(technicians.length / limit),
+  }
+    }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export const techniciansService = {
     getAlltechniciansFromDB,
