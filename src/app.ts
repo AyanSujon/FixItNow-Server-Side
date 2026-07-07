@@ -9,6 +9,7 @@ import { userRoutes } from "./modules/user/user.route";
 import { authRoutes } from "./modules/auth/auth.route";
 import { techniciansRoutes } from "./modules/technicians/technicians.route";
 import { adminRoutes } from "./modules/admin/admin.route";
+import { categoriesRoutes } from "./modules/categories/categories.route";
 
 
 const app: Application = express();
@@ -39,6 +40,10 @@ app.use("/api/auth", authRoutes);
 
 // Technicians (Public)
 app.use("/api/technicians", techniciansRoutes);
+
+
+// categories (Public)
+app.use("/api/categories", categoriesRoutes)
 
 
 // Admin ENDPOINT
