@@ -1,7 +1,10 @@
 
 
+import { userStatus } from "../../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
 import { UserFilters } from "./admin.interface";
+import HttpStatus from "http-status";
+
 
 // Filter By:
 // GET /api/admin/users?role=TECHNICIAN
@@ -77,6 +80,46 @@ const getAllUserFromDB = async (filters: UserFilters) => {
   };
 };
 
+
+
+
+
+
+
+
+const updateUserStatus = async (id: string, userStatus: userStatus) => {
+
+  // Check if the user exists
+  const user = await prisma.user.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!user) {
+    throw new Error( "User not found");
+  }
+
+  // Update the user's status
+  const updatedUser = await prisma.user.update({
+    where: {
+      id,
+    },
+    data: {
+      userStatus,
+    },
+  });
+
+  return updatedUser;
+};
+
+
+
+
+
+
+
 export const adminService = {
   getAllUserFromDB,
+  updateUserStatus,
 };
