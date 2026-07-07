@@ -2,8 +2,9 @@
 
 import { userStatus } from "../../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
-import { UserFilters } from "./admin.interface";
+import { createServiceCategoryPlayload, UserFilters } from "./admin.interface";
 import HttpStatus from "http-status";
+import slugify from "slugify";
 
 
 // Filter By:
@@ -118,8 +119,46 @@ const updateUserStatus = async (id: string, userStatus: userStatus) => {
 
 
 
+const createServiceCategoryInDB = async (payload: createServiceCategoryPlayload) => {
+  const slug = slugify(payload.name, {
+    lower: true,
+    strict: true,
+    trim: true,
+  });
+
+  const existingCategory = await prisma.category.findFirst({
+    where: {
+      OR: [
+        { name: payload.name },
+        { slug },
+      ],
+    },
+  });
+
+  if (existingCategory) {
+    throw new Error(
+        "Category already exists."
+    );
+  }
+
+  const category = await prisma.category.create({
+    data: {
+      name: payload.name,
+      slug,
+      icon: payload.icon,
+      description: payload.description,
+    },
+  });
+
+  return category;
+};
+
+
+
+
 
 export const adminService = {
   getAllUserFromDB,
   updateUserStatus,
+  createServiceCategoryInDB
 };

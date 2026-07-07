@@ -12,7 +12,7 @@ router.get("/users", auth(Role.ADMIN), adminController.getAllUsers)
 
 router.patch("/users/:id", auth(Role.ADMIN), adminController.UpdateUserStatus)
 
-
+router.post("/categories", auth(Role.ADMIN), adminController.createServiceCategory)
 
 
 

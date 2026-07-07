@@ -8,7 +8,15 @@ export type UserFilters = {
   isVerified?: boolean;
   userStatus?: userStatus;
 
-  
+
   page?: number;
   limit?: number;
 };
+
+
+export interface createServiceCategoryPlayload{
+
+  name: string;
+  icon?: string;
+  description?: string;
+}

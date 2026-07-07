@@ -102,6 +102,19 @@ const updateMyProfileInDB = async(userId: string, payload: any)=>{
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 export const userService = {
     registerUserIntoDB,
     getMyProfileFromDB,

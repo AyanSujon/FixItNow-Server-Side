@@ -4,6 +4,7 @@ import { sendResponse } from "../../utils/sendResponse";
 import HttpStatus from "http-status";
 import { adminService } from "./admin.service";
 import { userStatus } from "../../../generated/prisma/enums";
+import { createServiceCategoryPlayload } from "./admin.interface";
 
 
 
@@ -55,6 +56,24 @@ const UpdateUserStatus = catchAsync(async (req: Request, res: Response, next: Ne
 
 
 
+const createServiceCategory = catchAsync(async(req: Request, res: Response, next: NextFunction)=>{
+
+    const payload = req.body;
+
+    const category = await adminService.createServiceCategoryInDB(payload);
+
+
+
+        sendResponse(res, {
+        success: true,
+        statusCode: HttpStatus.CREATED,
+        message: "Category Created successfully",
+        data: category,
+    });
+
+})
+
+
 
 
 
@@ -64,6 +83,6 @@ const UpdateUserStatus = catchAsync(async (req: Request, res: Response, next: Ne
 export const adminController = {
     getAllUsers,
     UpdateUserStatus,
-
+    createServiceCategory, 
 
 }
