@@ -62,6 +62,11 @@ import { sendResponse } from "../../utils/sendResponse";
 import HttpStatus from "http-status";
 import { techniciansService } from "./technicians.service";
 
+
+
+
+
+
 const getAlltechnicians = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const filters = {
@@ -112,6 +117,21 @@ const getAlltechnicians = catchAsync(
 
 
 
+const getTechnicianById = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;  
+
+
+
+    const technician = await techniciansService.getTechnicianByIdFromDB(id as string);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: HttpStatus.OK,
+      message: "technician profile fetched successfully.",
+      data: { technician },
+    });
+  })
 
 
 
@@ -120,4 +140,6 @@ const getAlltechnicians = catchAsync(
 
 export const techniciansController = {
   getAlltechnicians,
+  getTechnicianById,
+
 };

@@ -123,6 +123,27 @@ const getAlltechniciansFromDB = async (filters: TechnicianFilters) => {
 
 
 
+const getTechnicianByIdFromDB = async (id: string) => {
+
+
+  const technician = await prisma.user.findUnique({
+    where: {
+      id: id,
+    },
+    omit: {
+      password: true,
+    },
+    include: {
+      technicianProfile: true,
+    },
+  })
+  
+  return technician;
+
+};
+
+
+
 
 
 
@@ -132,6 +153,7 @@ const getAlltechniciansFromDB = async (filters: TechnicianFilters) => {
 
 export const techniciansService = {
     getAlltechniciansFromDB,
+    getTechnicianByIdFromDB
 
 }
 

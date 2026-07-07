@@ -6,8 +6,9 @@ const router = Router();
 
 
 // Get All Technicians 
-router.get("/", techniciansController.getAlltechnicians)
+router.get("/", techniciansController.getAlltechnicians);
 
+router.get("/:id", techniciansController.getTechnicianById);
 
 
 
