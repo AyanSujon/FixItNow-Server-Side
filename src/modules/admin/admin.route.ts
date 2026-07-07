@@ -8,11 +8,15 @@ import { auth } from "../../middlewares/auth";
 const router = Router();
 
 
-router.get("/users", auth(Role.ADMIN), adminController.getAllUsers)
+router.get("/users", auth(Role.ADMIN), adminController.getAllUsers);
 
-router.patch("/users/:id", auth(Role.ADMIN), adminController.UpdateUserStatus)
+router.patch("/users/:id", auth(Role.ADMIN), adminController.UpdateUserStatus);
 
-router.post("/categories", auth(Role.ADMIN), adminController.createServiceCategory)
+router.post("/categories", auth(Role.ADMIN), adminController.createServiceCategory);
+
+router.get("/categories", auth(Role.ADMIN), adminController.getAllCategories);
+
+
 
 
 

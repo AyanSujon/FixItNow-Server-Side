@@ -56,7 +56,7 @@ const UpdateUserStatus = catchAsync(async (req: Request, res: Response, next: Ne
 
 
 
-const createServiceCategory = catchAsync(async(req: Request, res: Response, next: NextFunction)=>{
+const createServiceCategory = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
 
     const payload = req.body;
 
@@ -64,7 +64,7 @@ const createServiceCategory = catchAsync(async(req: Request, res: Response, next
 
 
 
-        sendResponse(res, {
+    sendResponse(res, {
         success: true,
         statusCode: HttpStatus.CREATED,
         message: "Category Created successfully",
@@ -76,13 +76,25 @@ const createServiceCategory = catchAsync(async(req: Request, res: Response, next
 
 
 
+const getAllCategories = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
 
+    const categories = await adminService.getAllCategoriesFromDB();
+
+
+    sendResponse(res, {
+        success: true,
+        statusCode: HttpStatus.OK,
+        message: "Patched All Service Category successfully",
+        data: categories,
+    });
+})
 
 
 
 export const adminController = {
     getAllUsers,
     UpdateUserStatus,
-    createServiceCategory, 
+    createServiceCategory,
+    getAllCategories
 
 }

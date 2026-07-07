@@ -157,8 +157,31 @@ const createServiceCategoryInDB = async (payload: createServiceCategoryPlayload)
 
 
 
+
+
+
+const getAllCategoriesFromDB = async () => {
+  const categories = await prisma.category.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return categories;
+};
+
+
+
+
+
+
+
+
+
 export const adminService = {
   getAllUserFromDB,
   updateUserStatus,
-  createServiceCategoryInDB
+  createServiceCategoryInDB,
+  getAllCategoriesFromDB,
+  
 };
