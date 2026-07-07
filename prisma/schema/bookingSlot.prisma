@@ -1,0 +1,43 @@
+model BookingSlot {
+    id String @id @default(uuid())
+
+    serviceId String
+    service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+    // Slot date
+    date DateTime
+
+    // Time
+    // startTime String
+    // endTime   String
+
+    startsAt DateTime
+    endsAt   DateTime
+
+    // Availability
+    isAvailable Boolean @default(true)
+    isBooked    Boolean @default(false)
+
+    // Optional booking relation
+    booking Booking? @relation(fields: [bookingId], references: [id])
+
+    // Optional note
+    note String?
+
+    // Customer can book until this time
+    bookingDeadline DateTime?
+
+    // Maximum bookings (future support)
+    maxBookings Int @default(1)
+
+    // Current bookings
+    bookedCount Int @default(0)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    bookingId String?
+
+    @@index([serviceId])
+    @@index([date])
+    @@map("booking_slot")
+}

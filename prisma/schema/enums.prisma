@@ -30,7 +30,7 @@ enum Profession {
     SMART_HOME_INSTALLER
 }
 
-enum ServiceType {
+enum SkillsType {
     ELECTRICAL
     PLUMBING
     CARPENTRY
@@ -64,25 +64,34 @@ enum BookingStatus {
   CANCELLED
 }
 
+
 enum PaymentStatus {
   PENDING
-  SUCCESS
+  PROCESSING
+  COMPLETED
   FAILED
   REFUNDED
+  CANCELLED
 }
 
 
 
+enum PaymentMethod {
+  CARD
+  MOBILE_BANKING
+  BANK_TRANSFER
+}
+
+enum PaymentProvider {
+  STRIPE
+  SSLCOMMERZ
+}
 
 
-
-
-
-
-
-
-
-
+enum CurrencyType {
+    USD
+    BDT
+}
 
 
 

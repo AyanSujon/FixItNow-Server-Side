@@ -1,24 +1,28 @@
 model TechnicianProfile {
-  id                 String   @id @default(uuid())
-  userId             String   @unique
+  id     String @id @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+
   bio                String?
   profilePhoto       String?
   description        String?
   profession         Profession?
-  serviceArea        ServiceType?
+  skills             SkillsType?
   yearsOfExperience  Int?
-  hourlyRate         Decimal? @db.Decimal(10, 2)
-  averageRating      Float    @default(0)
-  totalReviews       Int      @default(0)
-  totalCompletedJobs Int      @default(0)
-  isAvailable        Boolean  @default(true)
+  hourlyRate         Decimal?    @db.Decimal(10, 2)
+  averageRating      Float       @default(0)
+  totalReviews       Int         @default(0)
+  totalCompletedJobs Int         @default(0)
+  isAvailable        Boolean     @default(true)
   responseTime       Int?
-  isApproved         Boolean  @default(false)
+  isApproved         Boolean     @default(false)
   address            String?
   city               String?
   district           String?
 
-  user User @relation(fields: [userId], references: [id])
+  services Service[]
+  reviews  Review[]
+  bookings Booking[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

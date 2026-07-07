@@ -8,13 +8,17 @@ model User {
     role         Role         @default(CUSTOMER)
     isVerified   Boolean      @default(false)
     lastLoginAt  DateTime?
-    userStatus  userStatus? 
+    userStatus   userStatus?
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
     technicianProfile TechnicianProfile?
-    services Service[]
+    services          Service[]
+    payments          Payment[]          @relation("CustomerPayments")
+
+    reviews          Review[]  @relation("CustomerReviews")
+    customerBookings Booking[] @relation("CustomerBookings")
 
     @@map("users")
 }
