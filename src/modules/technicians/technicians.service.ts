@@ -1,6 +1,6 @@
 import { Role } from "../../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
-import { TechnicianFilters } from "./technicians.interface";
+import { IBookingSlot, TechnicianFilters } from "./technicians.interface";
 
 
 
@@ -127,13 +127,58 @@ const getTechnicianByIdFromDB = async (id: string) => {
 
 
 
+const updateAvailabilitySlotsinDB = async (
+  id: string,
+  payload: IBookingSlot
+) => {
+
+  const {serviceId, date, startsAt, endsAt, isAvailable, isBooked, note, bookingDeadline, maxBookings} = payload;
+  // Check slot exists
+  const slot = await prisma.bookingSlot.findUnique({
+    where: { id },
+  });
+
+  if (!slot) {
+    throw new Error("Booking slot not found");
+  }
+
+  // Update slot
+  const updatedSlot = await prisma.bookingSlot.update({
+    where: { id },
+    data: {
+      serviceId, date, startsAt, endsAt, isAvailable, isBooked, note, bookingDeadline, maxBookings
+    },
+  });
+
+  return updatedSlot;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 export const techniciansService = {
     getAlltechniciansFromDB,
-    getTechnicianByIdFromDB
+    getTechnicianByIdFromDB,
+    updateAvailabilitySlotsinDB
 
 }
 

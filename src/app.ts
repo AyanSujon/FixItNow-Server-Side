@@ -43,6 +43,8 @@ app.use("/api/auth", authRoutes);
 // Technicians (Public)
 app.use("/api/technicians", techniciansRoutes);
 
+// Technicians Private
+app.use("/api/technician", techniciansRoutes);
 
 // categories (Public)
 app.use("/api/categories", categoriesRoutes);

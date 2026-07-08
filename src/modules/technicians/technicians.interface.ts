@@ -12,3 +12,17 @@ export interface TechnicianFilters {
   page?: number;
   limit?: number;
 }
+
+
+
+export interface IBookingSlot {
+  serviceId?: string;
+  date?: Date;
+  startsAt?: Date;
+  endsAt?: Date;
+  isAvailable?: boolean;
+  isBooked?: boolean;
+  note?: string;
+  bookingDeadline?: Date;
+  maxBookings?: number;
+}

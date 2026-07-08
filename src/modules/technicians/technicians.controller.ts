@@ -82,8 +82,29 @@ const getTechnicianById = catchAsync(
 
 
 
+const updateAvailabilitySlots = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+
+    const result = await techniciansService.updateAvailabilitySlotsinDB(
+      id as string,
+      req.body
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: HttpStatus.OK,
+      message: "Booking slot availability updated successfully.",
+      data: result,
+    });
+  }
+);
+
+
 export const techniciansController = {
   getAlltechnicians,
   getTechnicianById,
+  updateAvailabilitySlots,
+
 
 };
