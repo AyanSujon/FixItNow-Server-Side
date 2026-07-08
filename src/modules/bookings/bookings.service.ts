@@ -189,7 +189,48 @@ const createBookingInDB = async (
 
 
 
+
+
+
+
+
+const getAllBookingsFromDB = async () => {
+  const bookings = await prisma.booking.findMany({
+    include: {
+      customer: true,
+      technician: true,
+      service: true,
+      bookingSlots: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return bookings;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export const bookingsService ={
     createBookingInDB,
+    getAllBookingsFromDB,
+
 
 }

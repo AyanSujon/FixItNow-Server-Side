@@ -33,12 +33,22 @@ const createBookings = catchAsync(async(req: Request, res: Response, next: NextF
 
 
 
+const getAllBookings = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const bookings = await bookingsService.getAllBookingsFromDB();
 
-
-
-
+    sendResponse(res, {
+      success: true,
+      statusCode: HttpStatus.OK,
+      message: "Bookings fetched successfully.",
+      data: bookings,
+    });
+  }
+);
 
 export const bookingsController ={
     createBookings,
+    getAllBookings,
+    
 
 }
