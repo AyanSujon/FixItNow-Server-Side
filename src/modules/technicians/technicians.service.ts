@@ -127,6 +127,78 @@ const getTechnicianByIdFromDB = async (id: string) => {
 
 
 
+const createAvailabilitySlotsInDB = async (
+  payload: IBookingSlot
+) => {
+  const {
+    serviceId,
+    date,
+    startsAt,
+    endsAt,
+    isAvailable,
+    isBooked,
+    note,
+    bookingDeadline,
+    maxBookings,
+  } = payload;
+
+
+if (!serviceId) {
+  throw new Error("Service ID is required");
+}
+  // Check service exists
+  const service = await prisma.service.findUnique({
+    where: {
+      id: serviceId,
+    },
+  });
+
+  if (!service) {
+    throw new Error("Service not found");
+  }
+  
+
+  // Optional: Prevent duplicate slots
+  const existingSlot = await prisma.bookingSlot.findFirst({
+    where: {
+      serviceId,
+      startsAt,
+      endsAt,
+    },
+  });
+
+  if (existingSlot) {
+    throw new Error("This booking slot already exists.");
+  }
+
+  // Create slot
+  const bookingSlot = await prisma.bookingSlot.create({
+    data: {
+      serviceId,
+      date: date!,
+      startsAt: startsAt!,
+      endsAt: endsAt!,
+      isAvailable: isAvailable ?? true,
+      isBooked: isBooked ?? false,
+      note,
+      bookingDeadline,
+      maxBookings: maxBookings ?? 1,
+    },
+  });
+
+  return bookingSlot;
+};
+
+
+
+
+
+
+
+
+
+
+
 const updateAvailabilitySlotsinDB = async (
   id: string,
   payload: IBookingSlot
@@ -178,7 +250,9 @@ const updateAvailabilitySlotsinDB = async (
 export const techniciansService = {
     getAlltechniciansFromDB,
     getTechnicianByIdFromDB,
-    updateAvailabilitySlotsinDB
+    updateAvailabilitySlotsinDB,
+    createAvailabilitySlotsInDB,
+
 
 }
 

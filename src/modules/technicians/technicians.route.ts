@@ -16,6 +16,7 @@ router.get("/:id", techniciansController.getTechnicianById);
 
 // Technicians  (Private)
 router.put("/availability", auth(Role.TECHNICIAN), techniciansController.updateAvailabilitySlots);
+router.post("/availability", auth(Role.TECHNICIAN), techniciansController.createAvailabilitySlots);
 
 export const techniciansRoutes = router;
 

@@ -82,6 +82,33 @@ const getTechnicianById = catchAsync(
 
 
 
+
+
+const createAvailabilitySlots = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const payload = req.body;
+
+    const result = await techniciansService.createAvailabilitySlotsInDB(
+      payload
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: HttpStatus.CREATED,
+      message: "Availability slot created successfully.",
+      data: result,
+    });
+  }
+);
+
+
+
+
+
+
+
+
+
 const updateAvailabilitySlots = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
@@ -105,6 +132,8 @@ export const techniciansController = {
   getAlltechnicians,
   getTechnicianById,
   updateAvailabilitySlots,
+  createAvailabilitySlots,
+
 
 
 };
