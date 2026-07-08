@@ -30,6 +30,22 @@ const createServiceInDB = async (payload: IService, userid: string) => {
     }
 
 
+    // Validate Existing Service with this title
+    const existingService = await prisma.service.findFirst({
+        where: {
+            technicianId,
+            categoryId,
+            title: {
+                equals: title,
+                mode: "insensitive", 
+            },
+        },
+    });
+
+    if (existingService) {
+        throw new Error("You already have a service with this title in this category.");
+    }
+
 
     const createdService = await prisma.service.create({
         data: {
