@@ -177,7 +177,7 @@ const createBookingInDB = async (
           },
         },
         service: true,
-        bookingSlot: true,
+        bookingSlots: true
       },
     });
   });
