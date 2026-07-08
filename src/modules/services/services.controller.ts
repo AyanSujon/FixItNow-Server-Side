@@ -4,6 +4,7 @@ import { sendResponse } from "../../utils/sendResponse";
 import HttpStatus from "http-status";
 import { servicesService } from "./services.service";
 import jwt from "jsonwebtoken";
+import { IServiceQuery } from "./services.interface";
 
 
 
@@ -12,7 +13,7 @@ import jwt from "jsonwebtoken";
 
 
 
-
+// Create service (Technican)
 
 const createService = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
 
@@ -21,7 +22,7 @@ const createService = catchAsync(async (req: Request, res: Response, next: NextF
         throw new Error("Unauthorized");
     }
 
-    
+
     const userid = req.user?.id; // Requested User/Technician
     const payload = req.body;
 
@@ -42,7 +43,33 @@ const createService = catchAsync(async (req: Request, res: Response, next: NextF
 })
 
 
+
+
+// Get all services (public)
+const getAllServices = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const filters: IServiceQuery = {
+        ...req.query,
+    } as IServiceQuery;
+
+
+
+
+    const { services, meta } = await servicesService.getAllServicesFromDB(filters);
+
+    sendResponse(res, {
+        success: true,
+        statusCode: HttpStatus.OK,
+        message: "Services retrieved successfully",
+        data: services,
+        meta: meta,
+    });
+
+})
+
+
 export const servicesController = {
     createService,
+    getAllServices,
+
 
 }

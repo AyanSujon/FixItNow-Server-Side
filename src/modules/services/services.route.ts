@@ -9,7 +9,8 @@ const router = Router();
 
 
 
-router.post("/create", auth(Role.TECHNICIAN), servicesController.createService)
+router.post("/create", auth(Role.TECHNICIAN), servicesController.createService);
+router.get("/", servicesController.getAllServices);
 
 
 
