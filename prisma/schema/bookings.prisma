@@ -14,7 +14,7 @@ model Booking {
     paymentStatus PaymentStatus @default(PENDING)
     payment       Payment?
     Review        Review?
-    bookingDate   DateTime
+    bookingDate   DateTime @default(now())
     cancelledAt   DateTime?
     cancelReason  String?
     acceptedAt    DateTime?
