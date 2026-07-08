@@ -12,6 +12,7 @@ const router = Router();
 
 router.post("/create", auth(Role.CUSTOMER), bookingsController.createBookings);
 router.get("/", auth(Role.CUSTOMER), bookingsController.getAllBookings);
+router.get("/:id", auth(Role.CUSTOMER), bookingsController.getBookingsById);
 
 
 
