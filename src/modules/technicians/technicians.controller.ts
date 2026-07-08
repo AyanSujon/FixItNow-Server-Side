@@ -112,8 +112,9 @@ const createAvailabilitySlots = catchAsync(
 const updateAvailabilitySlots = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
+    
 
-    const result = await techniciansService.updateAvailabilitySlotsinDB(
+    const updatedSlot = await techniciansService.updateAvailabilitySlotsinDB(
       id as string,
       req.body
     );
@@ -122,7 +123,7 @@ const updateAvailabilitySlots = catchAsync(
       success: true,
       statusCode: HttpStatus.OK,
       message: "Booking slot availability updated successfully.",
-      data: result,
+      data: updatedSlot,
     });
   }
 );
