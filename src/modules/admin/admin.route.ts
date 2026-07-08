@@ -15,6 +15,7 @@ router.patch("/users/:id", auth(Role.ADMIN), adminController.UpdateUserStatus);
 router.post("/categories", auth(Role.ADMIN), adminController.createServiceCategory);
 
 router.get("/categories", auth(Role.ADMIN), adminController.getAllCategories);
+router.get("/bookings", auth(Role.ADMIN), adminController.getAllBookings);
 
 
 

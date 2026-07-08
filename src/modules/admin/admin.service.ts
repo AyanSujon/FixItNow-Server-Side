@@ -172,7 +172,21 @@ const getAllCategoriesFromDB = async () => {
 
 
 
+const getAllBookingsFromDB = async () => {
+  const bookings = await prisma.booking.findMany({
+    include: {
+      customer: true,
+      technician: true,
+      service: true,
+      bookingSlots: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
 
+  return bookings;
+};
 
 
 
@@ -183,5 +197,6 @@ export const adminService = {
   updateUserStatus,
   createServiceCategoryInDB,
   getAllCategoriesFromDB,
+  getAllBookingsFromDB, 
   
 };
