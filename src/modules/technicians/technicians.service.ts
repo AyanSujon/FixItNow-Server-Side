@@ -272,24 +272,30 @@ const updateTechnicianProfileinDB = async (
 
 
 
-// const getTechnicianOwnBookingsFromDB = async(technicianId: string)=>{
-
-// }
-
-
 const getTechnicianOwnBookingsFromDB = async (
-  technicianId: string
+  userId: string
 ) => {
+
+
+const user = await prisma.user.findUniqueOrThrow({
+  where: {
+    id: userId,
+  },
+  include:{
+    technicianProfile: true
+  }
+});
+
+const technicianProfileId = user.technicianProfile?.id;
+
   const bookings = await prisma.booking.findMany({
     where: {
-      technicianId
+      technicianId: technicianProfileId
     },
     include: {
       customer: true,
       service: true,
-      bookingSlot: true,
-      payment: true,
-      review: true,
+      bookingSlots: true,
     },
     orderBy: {
       createdAt: "desc",
@@ -298,6 +304,19 @@ const getTechnicianOwnBookingsFromDB = async (
 
   return bookings;
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

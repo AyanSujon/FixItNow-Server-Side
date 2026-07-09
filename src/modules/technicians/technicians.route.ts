@@ -10,7 +10,7 @@ const router = Router();
 // Get All Technicians  (Public)
 router.get("/", techniciansController.getAlltechnicians);
 
-router.get("/:id", techniciansController.getTechnicianById);
+
 
 
 
@@ -25,6 +25,6 @@ router.get("/bookings",  auth(Role.TECHNICIAN), techniciansController.getTechnic
 
 
 
-
+router.get("/:id", techniciansController.getTechnicianById);
 export const techniciansRoutes = router;
 

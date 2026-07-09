@@ -161,10 +161,10 @@ const updateTechnicianProfile = catchAsync(
 
 
 const getTechnicianOwnBookings = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  const technicianId = req.user?.id;
+  const userId = req.user?.id;
 
   const TechnicianOwnBookings = await techniciansService.getTechnicianOwnBookingsFromDB(
-    technicianId as string
+    userId as string
   );
 
   sendResponse(res, {
@@ -174,11 +174,6 @@ const getTechnicianOwnBookings = catchAsync(async (req: Request, res: Response, 
     data: TechnicianOwnBookings,
   });
 })
-
-
-
-
-
 
 
 
