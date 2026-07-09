@@ -52,9 +52,9 @@ const createPayments = catchAsync(
 
 const createCheckoutSeassion = catchAsync(async(req: Request, res: Response, next: NextFunction)=>{
   const userid = req.user?.id; 
-
-
-  const result = await paymentService.createCheckoutSeassion(userid as string);
+  const { bookingId } = req.body;
+  // console.log(bookingId ,"from controller");
+  const result = await paymentService.createCheckoutSeassion(userid as string, bookingId as string);
 
      sendResponse(res, {
       success: true,
@@ -71,12 +71,84 @@ const createCheckoutSeassion = catchAsync(async(req: Request, res: Response, nex
 
 
 
+const handleWebhook = catchAsync(async(req: Request, res: Response, next: NextFunction)=>{
+    const event = req.body as Buffer;
+const signature = req.headers['stripe-signature']!;
+
+await paymentService.handleWebhook(event, signature as string);
+
+
+sendResponse(res,{
+  success: true,
+  statusCode: HttpStatus.OK,
+  message: "Webhook triggered successfully.",
+  data: null
+})
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 export const paymentsController ={
     createPayments,
     // confirmPayment,
     createCheckoutSeassion,
+    handleWebhook,
+
 
 
 }

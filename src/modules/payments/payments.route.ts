@@ -11,7 +11,7 @@ router.post("/create",   auth(Role.CUSTOMER), paymentsController.createPayments)
 // router.post("/confirm",   auth(Role.CUSTOMER), paymentsController.confirmPayment)
 router.post("/checkout",   auth(Role.CUSTOMER), paymentsController.createCheckoutSeassion)
 
-
+router.post("/webhook", paymentsController.handleWebhook)
 
 
 

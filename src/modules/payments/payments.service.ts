@@ -4,9 +4,13 @@ import { stripe } from "../../lib/stripe";
 import { ICreatePayment } from "./payments.interface";
 import {
   BookingStatus,
+  CurrencyType,
+  PaymentMethod,
+  PaymentProvider,
   PaymentStatus,
 } from "../../../generated/prisma/enums";
 import config from "../../config";
+import Stripe from "stripe";
 
 const createPaymentsInDB = async (
   customerId: string,
@@ -197,11 +201,11 @@ const createPaymentsInDB = async (
 //           stripeCustomerId = customer.id
 //         }
 
-        
-      
+
+
 //     })
 
- 
+
 // }
 
 
@@ -212,10 +216,11 @@ const createPaymentsInDB = async (
 
 
 
-const createCheckoutSeassion = async (userId: string) => {
+const createCheckoutSeassion = async (userId: string, bookingId: string) => {
 
 
   const transactionResult = await prisma.$transaction(async (tx) => {
+
     const user = await tx.user.findUniqueOrThrow({
       where: {
         id: userId,
@@ -239,18 +244,12 @@ const createCheckoutSeassion = async (userId: string) => {
         name: user.name,
         metadata: {
           userId: user.id,
+          bookingId: bookingId
         },
       });
 
       stripeCustomerId = customer.id;
     }
-
-    // return {
-    //   user,
-    //   stripeCustomerId,
-    // };
-
-
 
 
 
@@ -264,8 +263,12 @@ const createCheckoutSeassion = async (userId: string) => {
       payment_method_types: ["card"],
       success_url: `${config.appUrl}/payment?success=true`,
       cancel_url: `${config.appUrl}/payment?success=false`,
-      metadata: {userId: user.id}
-      
+      metadata: { 
+        userId: user.id,
+        bookingId: bookingId
+
+      }
+
     })
 
     return session.url;
@@ -277,6 +280,164 @@ const createCheckoutSeassion = async (userId: string) => {
 
 
 
+
+
+
+
+
+// const handleWebhook = async (payload: Buffer, signature: string) => {
+
+//   const endpointSecret = config.stripWebhookSecret;
+//   const event = stripe.webhooks.constructEvent(
+//     payload,
+//     signature,
+//     endpointSecret
+//   );
+
+
+
+//   // Handle the event
+//   switch (event.type) {
+//     case 'checkout.session.completed':
+//       console.log(event.data.object);
+
+//       const seassion: Stripe.Checkout.Session = event.data.object;
+
+//       const userId = seassion.metadata?.userid as string;
+//       const stripeCustomerId = seassion.customer as string;
+//       // const subscriptionId = seassion.subscription; 
+//       const amount = seassion?.amount_total! / 100;
+//       const currency = seassion.currency?.toUpperCase() as CurrencyType;
+
+//       if (!userId || !stripeCustomerId) {
+//         throw new Error("webhook failed")
+//       }
+
+
+//       await prisma.payment.upsert({
+//         where: {
+//           customerId: userId
+//         },
+//         create: {
+//           customerId: userId,
+//           stripeCustomerId,
+//           status: "COMPLETED" as PaymentStatus,
+//           amount: amount,
+//           currency: currency,
+
+
+
+
+//       }
+    
+//     )
+
+
+
+
+
+
+//       break;
+//     case 'customer.subscription.updated':
+
+//       break;
+
+//     case 'customer.subscription.deleted':
+
+//       break;
+
+//     default:
+//       // Unexpected event type
+//       console.log(`No event matched. Unhandled event type ${event.type}.`);
+//       break;
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const handleWebhook = async (payload: Buffer, signature: string) => {
+  const endpointSecret = config.stripWebhookSecret;
+
+  const event = stripe.webhooks.constructEvent(
+    payload,
+    signature,
+    endpointSecret
+  );
+
+  switch (event.type) {
+    case "checkout.session.completed": {
+      const session = event.data.object as Stripe.Checkout.Session;
+
+      const userId = session.metadata?.userId as string;
+      const bookingId = session.metadata?.bookingId as string;
+
+      const stripeCustomerId = session.customer as string;
+
+      const amount = (session.amount_total ?? 0) / 100;
+
+      const currency = session.currency?.toUpperCase() as CurrencyType;
+
+      if (!userId|| !stripeCustomerId) {
+        throw new Error("Webhook validation failed.");
+      }
+
+      await prisma.payment.upsert({
+        where: {
+          bookingId,
+          customerId: userId,
+        },
+        create: {
+          bookingId,
+          customerId: userId,
+          stripeCustomerId,
+          amount,
+          currency,
+          method: PaymentMethod.CARD,
+          provider: PaymentProvider.STRIPE,
+          status: PaymentStatus.COMPLETED,
+          paymentIntentId: session.payment_intent as string,
+          sessionId: session.id,
+          paidAt: new Date(),
+        },
+        update: {
+          stripeCustomerId,
+          amount,
+          currency,
+          status: PaymentStatus.COMPLETED,
+          paymentIntentId: session.payment_intent as string,
+          sessionId: session.id,
+          paidAt: new Date(),
+        },
+      });
+
+      break;
+    }
+
+    case "customer.subscription.updated":
+      break;
+
+    case "customer.subscription.deleted":
+      break;
+
+    default:
+      console.log(`Unhandled event type ${event.type}`);
+      break;
+  }
+};
 
 
 
@@ -294,6 +455,7 @@ export const paymentService = {
   createPaymentsInDB,
   // confirmPaymentInDB,
   createCheckoutSeassion,
+  handleWebhook,
 
 
 };
