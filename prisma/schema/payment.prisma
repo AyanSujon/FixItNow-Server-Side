@@ -13,7 +13,7 @@ model Payment {
   provider          PaymentProvider
 
   status            PaymentStatus @default(PENDING)
-
+stripeCustomerId String? 
   transactionId     String?  @unique
   paymentIntentId   String?  @unique // Stripe PaymentIntent ID
   sessionId         String?  @unique // Stripe Checkout Session ID

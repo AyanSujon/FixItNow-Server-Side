@@ -36,3 +36,4 @@ export interface ICreatePayment {
   provider: PaymentProvider;
   currency?: CurrencyType;
 }
+

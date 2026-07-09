@@ -8,6 +8,8 @@ const router = Router();
 
 
 router.post("/create",   auth(Role.CUSTOMER), paymentsController.createPayments)
+// router.post("/confirm",   auth(Role.CUSTOMER), paymentsController.confirmPayment)
+router.post("/checkout",   auth(Role.CUSTOMER), paymentsController.createCheckoutSeassion)
 
 
 
