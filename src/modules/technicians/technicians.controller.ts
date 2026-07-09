@@ -180,13 +180,85 @@ const getTechnicianOwnBookings = catchAsync(async (req: Request, res: Response, 
 
 
 
+
+
+
+
+
+// const updateBookingStatus = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  
+//   const result = await techniciansService.updateBookingStatusInDB();
+
+//   sendResponse(res, {
+//     success: true,
+//     statusCode: HttpStatus.OK,
+//     message: "Your all booking patched successfully.",
+//     data: TechnicianOwnBookings,
+//   });
+// })
+
+
+
+
+
+
+
+
+const updateBookingStatus = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const bookingId = req.params.id;
+    const technicianUserId = req.user?.id;
+    const payload = req.body;
+
+    const result =
+      await techniciansService.updateBookingStatusIntoDB(
+        bookingId as string,
+        technicianUserId as string,
+        payload
+      );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: 200,
+      message: "Booking status updated successfully.",
+      data: result,
+    });
+  }
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export const techniciansController = {
   getAlltechnicians,
   getTechnicianById,
   updateAvailabilitySlots,
   createAvailabilitySlots,
   updateTechnicianProfile,
-  getTechnicianOwnBookings
+  getTechnicianOwnBookings,
+  updateBookingStatus
 
 
 };

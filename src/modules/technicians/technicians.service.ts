@@ -1,4 +1,4 @@
-import { Role } from "../../../generated/prisma/enums";
+import { BookingStatus, Role } from "../../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
 import { IBookingSlot, IUpdateTechnicianProfile, TechnicianFilters } from "./technicians.interface";
 
@@ -310,7 +310,49 @@ const technicianProfileId = user.technicianProfile?.id;
 
 
 
+const updateBookingStatusIntoDB = async (
+  bookingId: string,
+  technicianUserId: string,
+  payload: {
+    status: BookingStatus;
+  }
+) => {
+  const technicianProfile =
+    await prisma.technicianProfile.findUniqueOrThrow({
+      where: {
+        userId: technicianUserId,
+      },
+    });
 
+  const booking = await prisma.booking.findUniqueOrThrow({
+    where: {
+      id: bookingId,
+    },
+  });
+
+  // Ensure the booking belongs to this technician
+  if (booking.technicianId !== technicianProfile.id) {
+    throw new Error(
+      "This booking does not belong to you."
+    );
+  }
+
+  const updatedBooking = await prisma.booking.update({
+    where: {
+      id: bookingId,
+    },
+    data: {
+      status: payload.status,
+    },
+    include: {
+      customer: true,
+      service: true,
+      payment: true,
+    },
+  });
+
+  return updatedBooking;
+};
 
 
 
@@ -330,6 +372,7 @@ export const techniciansService = {
     createAvailabilitySlotsInDB,
     updateTechnicianProfileinDB,
 getTechnicianOwnBookingsFromDB,
+updateBookingStatusIntoDB
 
 }
 
