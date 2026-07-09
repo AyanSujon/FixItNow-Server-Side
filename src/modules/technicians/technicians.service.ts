@@ -234,12 +234,6 @@ const updateAvailabilitySlotsinDB = async (
 
 
 
-// const updateTechnicianProfileinDB = async( technicianId: string, payload: any )=>{
-
-// }
-
-
-
 const updateTechnicianProfileinDB = async (
   technicianId: string,
   payload: IUpdateTechnicianProfile
@@ -278,6 +272,33 @@ const updateTechnicianProfileinDB = async (
 
 
 
+// const getTechnicianOwnBookingsFromDB = async(technicianId: string)=>{
+
+// }
+
+
+const getTechnicianOwnBookingsFromDB = async (
+  technicianId: string
+) => {
+  const bookings = await prisma.booking.findMany({
+    where: {
+      technicianId
+    },
+    include: {
+      customer: true,
+      service: true,
+      bookingSlot: true,
+      payment: true,
+      review: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return bookings;
+};
+
 
 
 
@@ -288,8 +309,8 @@ export const techniciansService = {
     getTechnicianByIdFromDB,
     updateAvailabilitySlotsinDB,
     createAvailabilitySlotsInDB,
-    updateTechnicianProfileinDB
-
+    updateTechnicianProfileinDB,
+getTechnicianOwnBookingsFromDB,
 
 }
 

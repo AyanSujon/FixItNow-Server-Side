@@ -63,7 +63,7 @@ const getAlltechnicians = catchAsync(
 
 const getTechnicianById = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { id } = req.params;  
+    const { id } = req.params;
 
 
 
@@ -112,7 +112,7 @@ const createAvailabilitySlots = catchAsync(
 const updateAvailabilitySlots = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
-    
+
 
     const updatedSlot = await techniciansService.updateAvailabilitySlotsinDB(
       id as string,
@@ -137,7 +137,7 @@ const updateAvailabilitySlots = catchAsync(
 const updateTechnicianProfile = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const technicianId = req.user?.id;
-    
+
 
     const updatedProfile = await techniciansService.updateTechnicianProfileinDB(
       technicianId as string,
@@ -160,6 +160,25 @@ const updateTechnicianProfile = catchAsync(
 
 
 
+const getTechnicianOwnBookings = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  const technicianId = req.user?.id;
+
+  const TechnicianOwnBookings = await techniciansService.getTechnicianOwnBookingsFromDB(
+    technicianId as string
+  );
+
+  sendResponse(res, {
+    success: true,
+    statusCode: HttpStatus.OK,
+    message: "Your all booking patched successfully.",
+    data: TechnicianOwnBookings,
+  });
+})
+
+
+
+
+
 
 
 
@@ -171,7 +190,8 @@ export const techniciansController = {
   getTechnicianById,
   updateAvailabilitySlots,
   createAvailabilitySlots,
-updateTechnicianProfile
+  updateTechnicianProfile,
+  getTechnicianOwnBookings
 
 
 };

@@ -20,6 +20,7 @@ router.post("/availability", auth(Role.TECHNICIAN), techniciansController.create
 
 
 router.put("/profile",  auth(Role.TECHNICIAN), techniciansController.updateTechnicianProfile);
+router.get("/bookings",  auth(Role.TECHNICIAN), techniciansController.getTechnicianOwnBookings);
 
 
 
