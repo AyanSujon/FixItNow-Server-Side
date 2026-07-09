@@ -12,7 +12,7 @@ const createPayments = catchAsync(
     const customerId = req.user?.id;
     const payload =req.body;
 
-    console.log("controller : ", customerId, payload)
+    // console.log("controller : ", customerId, payload)
 
     const result = await paymentService.createPaymentsInDB(customerId as string, payload);
 
@@ -93,7 +93,20 @@ sendResponse(res,{
 
 
 
+const getAllPaymentHistory = catchAsync(async(req: Request, res: Response, next: NextFunction)=>{
 
+    const userId = req.user?.id;
+
+    
+    const AllPaymentHistory = await paymentService.getAllPaymentHistoryFromDB(userId as string);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: HttpStatus.OK,
+      message: "All Payment History patched successfully",
+      data: AllPaymentHistory,
+    });
+})
 
 
 
@@ -148,6 +161,8 @@ export const paymentsController ={
     // confirmPayment,
     createCheckoutSeassion,
     handleWebhook,
+    getAllPaymentHistory,
+
 
 
 

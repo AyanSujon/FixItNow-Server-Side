@@ -13,6 +13,10 @@ router.post("/checkout",   auth(Role.CUSTOMER), paymentsController.createCheckou
 
 router.post("/webhook", paymentsController.handleWebhook)
 
+router.get("/", auth(Role.CUSTOMER), paymentsController.getAllPaymentHistory)
+
+
+
 
 
 export const paymentsRoutes = router;
