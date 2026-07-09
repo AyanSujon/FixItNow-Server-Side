@@ -14,6 +14,7 @@ router.post("/checkout",   auth(Role.CUSTOMER), paymentsController.createCheckou
 router.post("/webhook", paymentsController.handleWebhook)
 
 router.get("/", auth(Role.CUSTOMER), paymentsController.getAllPaymentHistory)
+router.get("/:id", auth(Role.CUSTOMER), paymentsController.getPaymentDetailsById)
 
 
 

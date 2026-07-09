@@ -119,6 +119,21 @@ const getAllPaymentHistory = catchAsync(async(req: Request, res: Response, next:
 
 
 
+const getPaymentDetailsById = catchAsync(async(req: Request, res: Response, next: NextFunction)=>{
+
+    const paymentId = req.params.id;
+
+    
+    const getPaymentDetails = await paymentService.getPaymentDetailsByIdFromDB(paymentId as string);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: HttpStatus.OK,
+      message: "Payment Details patched successfully",
+      data: getPaymentDetails,
+    });
+})
+
 
 
 
@@ -162,6 +177,8 @@ export const paymentsController ={
     createCheckoutSeassion,
     handleWebhook,
     getAllPaymentHistory,
+    getPaymentDetailsById,
+    
 
 
 

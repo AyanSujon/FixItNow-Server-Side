@@ -470,6 +470,22 @@ const getAllPaymentHistoryFromDB = async (userId: string) => {
 
 
 
+const getPaymentDetailsByIdFromDB =async (paymentId: string) => {
+  const allPaymentHistory = await prisma.payment.findUnique({
+    where: {
+      id: paymentId,
+    },
+    include:{
+      booking: true
+    }
+  });
+
+  return allPaymentHistory;
+};
+
+
+
+
 
 
 
@@ -485,6 +501,7 @@ export const paymentService = {
   createCheckoutSeassion,
   handleWebhook,
   getAllPaymentHistoryFromDB,
+  getPaymentDetailsByIdFromDB
 
 
 
