@@ -1,6 +1,6 @@
 import { Role } from "../../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
-import { IBookingSlot, TechnicianFilters } from "./technicians.interface";
+import { IBookingSlot, IUpdateTechnicianProfile, TechnicianFilters } from "./technicians.interface";
 
 
 
@@ -234,6 +234,42 @@ const updateAvailabilitySlotsinDB = async (
 
 
 
+// const updateTechnicianProfileinDB = async( technicianId: string, payload: any )=>{
+
+// }
+
+
+
+const updateTechnicianProfileinDB = async (
+  technicianId: string,
+  payload: IUpdateTechnicianProfile
+) => {
+  // Check if the technician profile exists
+  const technicianProfile = await prisma.technicianProfile.findUnique({
+    where: {
+      userId: technicianId,
+    },
+  });
+
+  if (!technicianProfile) {
+    throw new Error("Technician profile not found.");
+  }
+
+  // Update profile
+  const updatedProfile = await prisma.technicianProfile.update({
+    where: {
+      userId: technicianId,
+    },
+    data: payload,
+  });
+
+  return updatedProfile;
+};
+
+
+
+
+
 
 
 
@@ -252,6 +288,7 @@ export const techniciansService = {
     getTechnicianByIdFromDB,
     updateAvailabilitySlotsinDB,
     createAvailabilitySlotsInDB,
+    updateTechnicianProfileinDB
 
 
 }

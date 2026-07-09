@@ -129,12 +129,49 @@ const updateAvailabilitySlots = catchAsync(
 );
 
 
+
+
+
+
+
+const updateTechnicianProfile = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const technicianId = req.user?.id;
+    
+
+    const updatedProfile = await techniciansService.updateTechnicianProfileinDB(
+      technicianId as string,
+      req.body
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: HttpStatus.OK,
+      message: "Profile updated successfully.",
+      data: updatedProfile,
+    });
+  }
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export const techniciansController = {
   getAlltechnicians,
   getTechnicianById,
   updateAvailabilitySlots,
   createAvailabilitySlots,
-
+updateTechnicianProfile
 
 
 };
