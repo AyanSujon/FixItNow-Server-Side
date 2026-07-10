@@ -1,6 +1,6 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import express, { Application, Request, Response} from "express";
+import express, { Application, NextFunction, request, Request, Response } from "express";
 import config from "./config";
 import { prisma } from "./lib/prisma";
 import HttpStatus from "http-status";
@@ -15,6 +15,8 @@ import { bookingsRoutes } from "./modules/bookings/bookings.route";
 import { paymentsRoutes } from "./modules/payments/payments.route";
 import { stripe } from "./lib/stripe";
 import { reviewsRoutes } from "./modules/reviews/reviews.route";
+import { notFound } from "./middlewares/notfound";
+import { globalErrorHandler } from "./middlewares/globalErrorHandler";
 
 
 const app: Application = express();
@@ -25,7 +27,7 @@ app.use(cors({
 }));
 
 
-app.use("/api/payments/webhook", express.raw({type: 'application/json'}))
+app.use("/api/payments/webhook", express.raw({ type: 'application/json' }))
 
 
 // const endpointSecret = config.stripWebhookSecret;
@@ -85,7 +87,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 
-app.get("/", async(req: Request, res: Response) => {
+app.get("/", async (req: Request, res: Response) => {
     res.send("Hello, World!");
 });
 
@@ -133,8 +135,11 @@ app.use("/api/reviews", reviewsRoutes);
 
 
 
+app.use(notFound);
 
 
+
+app.use(globalErrorHandler);
 
 
 
