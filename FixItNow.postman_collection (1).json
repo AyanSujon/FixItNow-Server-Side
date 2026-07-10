@@ -1,0 +1,768 @@
+{
+  "info": {
+    "_postman_id": "3c26fe22-12d0-45b8-aa71-5510c1b94d08",
+    "name": "FixItNow",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "54899989",
+    "_collection_link": "https://go.postman.co/collection/54899989-3c26fe22-12d0-45b8-aa71-5510c1b94d08?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"TECHNICIAN\",\r\n  \"email\": \"TECHNICIAN@example.com\",\r\n  \"password\": \"TECHNICIAN\",\r\n  \"phone\": \"+880120000000\",\r\n  \"profilePhoto\": \"https://i.pravatar.cc/300?img=12\",\r\n  \"role\": \"TECHNICIAN\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"TECHNICIAN@example.com\",\r\n  \"password\": \"TECHNICIAN\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "Get My Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/auth/me",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update My Profile",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"bio\": \"Experienced electrician providing reliable home and commercial electrical services.\",\r\n  \"profilePhoto\": \"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400\",\r\n  \"description\": \"Specialized in electrical wiring, circuit breaker installation, lighting solutions, ceiling fan installation, and emergency electrical repairs.\",\r\n  \"profession\": \"ELECTRICIAN\",\r\n  \"serviceArea\": \"ELECTRICAL\",\r\n  \"yearsOfExperience\": 2,\r\n  \"hourlyRate\": 49.99,\r\n  \"isAvailable\": true,\r\n  \"address\": \"House 15, Road 5, Mirpur-10\",\r\n  \"city\": \"Dhaka\",\r\n  \"district\": \"Dhaka\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/my-profile",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "my-profile"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Technicians",
+      "item": [
+        {
+          "name": "Get All Technicians",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/technicians?page=1&limit=3",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "technicians"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "3"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get technician profile By Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/technicians/fc4c2eb1-5ea3-4113-bad1-ce2164aa75ae",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "technicians",
+                "fc4c2eb1-5ea3-4113-bad1-ce2164aa75ae"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update technician profile",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"bio\": \"Professional electrician with 8 years of experience.\",\r\n  \"profilePhoto\": \"https://example.com/images/profile.jpg\",\r\n  \"description\": \"Providing reliable electrical installation, maintenance, and repair services.\",\r\n  \"profession\": \"ELECTRICIAN\",\r\n  \"skills\": \"PLUMBING\",\r\n  \"yearsOfExperience\": 8,\r\n  \"hourlyRate\": 35.5,\r\n  \"isAvailable\": true,\r\n  \"responseTime\": 20,\r\n  \"address\": \"House 15, Road 7, Block C\",\r\n  \"city\": \"Dhaka\",\r\n  \"district\": \"Dhaka\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/technician/profile",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "technician",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Technician own Booking created by customer",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/technician/bookings",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "technician",
+                "bookings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update booking status (accept/decline/complete) by Technician",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"status\": \"ACCEPTED\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/technician/bookings/b491a080-7d80-4236-9af8-459a792c75e5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "technician",
+                "bookings",
+                "b491a080-7d80-4236-9af8-459a792c75e5"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "GET All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/admin/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "admin",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update user status (ban/unban)",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"userStatus\": \"UNBAN\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/admin/users/049ed147-254c-4ef9-bc49-5a90f2a71053",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "admin",
+                "users",
+                "049ed147-254c-4ef9-bc49-5a90f2a71053"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create service category by admin",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Painting\",\r\n  \"slug\": \"painting\",\r\n  \"icon\": \"https://example.com/icons/painting.png\",\r\n  \"description\": \"Interior and exterior painting services.\",\r\n  \"isActive\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/admin/categories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "admin",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all categories by Admin",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/admin/categories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "admin",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Bookings by Admin",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/admin/bookings",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "admin",
+                "bookings"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "categories",
+      "item": [
+        {
+          "name": "Get all service categories (public)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/categories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Services",
+      "item": [
+        {
+          "name": "Create Service by TECHNICIAN",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"categoryId\": \"04540e3c-0531-49c4-8e3e-27877f81b159\",\r\n  \"title\": \"Complete House Wiring\",\r\n  \"description\": \"New electrical wiring for residential and commercial buildings.\",\r\n  \"price\": 50,\r\n  \"priceType\": \"HOURLY\",\r\n  \"estimatedDuration\": 480,\r\n  \"thumbnail\": \"https://example.com/images/wiring.jpg\",\r\n  \"isAvailable\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/services/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "services",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all services with filters (Public)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/services",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "services"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "bookings",
+      "item": [
+        {
+          "name": "Create new booking (customer)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\r\n\r\n{\r\n  \"technicianId\": \"b2365bc4-5a38-458a-b87b-505e570ceba4\",\r\n  \"serviceId\": \"086452e4-95d2-4624-8b7e-7c92ec91a555\",\r\n  \"note\": \"Booking Note\",\r\n  \"bookingSlotIds\": [\r\n    \"0ebfc399-d254-4ddc-8d2c-0f3706b65f6f\",\r\n    \"2a44d8f9-21f0-4186-b56f-543a7ce6638f\"\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/bookings/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "bookings",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Booking by id (customer)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/bookings/0b207247-4f46-4bb6-be3c-945fecef3479",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "bookings",
+                "0b207247-4f46-4bb6-be3c-945fecef3479"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getAllBookings (customer)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/bookings",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "bookings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "availability",
+      "item": [
+        {
+          "name": "Update availability slots by TECHNICIAN",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"serviceId\": \"086452e4-95d2-4624-8b7e-7c92ec91a555\",\r\n  \"date\": \"2026-07-15T00:00:00.000Z\",\r\n  \"startsAt\": \"2026-07-15T09:00:00.000Z\",\r\n  \"endsAt\": \"2026-07-15T10:00:00.000Z\",\r\n  \"isAvailable\": true,\r\n  \"isBooked\": false,\r\n  \"note\": \"Morning service slot\",\r\n  \"bookingDeadline\": \"2026-07-14T18:00:00.000Z\",\r\n  \"maxBookings\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/technician/availability",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "technician",
+                "availability"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create BookingSlot by Technician",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"serviceId\": \"086452e4-95d2-4624-8b7e-7c92ec91a555\",\r\n  \"date\": \"2026-07-15T00:00:00.000Z\",\r\n  \"startsAt\": \"2026-07-15T15:00:00.000Z\",\r\n  \"endsAt\": \"2026-07-15T16:00:00.000Z\",\r\n  \"isAvailable\": true,\r\n  \"isBooked\": false,\r\n  \"note\": \"Late afternoon service slot\",\r\n  \"bookingDeadline\": \"2026-07-14T18:00:00.000Z\",\r\n  \"maxBookings\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/technician/availability",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "technician",
+                "availability"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Payments",
+      "item": [
+        {
+          "name": "Create a payment intent/session for an accepted booking (not need)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"bookingId\": \"0042a248-28b7-4e86-bb80-521c20d02812\",\r\n  \"amount\": 150,\r\n  \"method\": \"CARD\",\r\n  \"provider\": \"STRIPE\",\r\n  \"currency\": \"USD\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/payments/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "payments",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Payment checkout by customer",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"bookingId\": \"0042a248-28b7-4e86-bb80-521c20d02812\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/payments/checkout",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "payments",
+                "checkout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get ALl payment history by customer",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/payments",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "payments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getPaymentDetailsById for customer",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/payments/0853c9a5-2f32-4eff-96e5-e6d4d92f3957",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "payments",
+                "0853c9a5-2f32-4eff-96e5-e6d4d92f3957"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Reviews",
+      "item": [
+        {
+          "name": "Review by customer for Technician",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"customerId\": \"93e4af2d-bd6f-46cc-b304-ee0de7cf7e94\",\r\n  \"technicianId\": \"b2365bc4-5a38-458a-b87b-505e570ceba4\",\r\n  \"bookingId\": \"0b207247-4f46-4bb6-be3c-945fecef3479\",\r\n  \"serviceId\": \"086452e4-95d2-4624-8b7e-7c92ec91a555\",\r\n  \"rating\": 5,\r\n  \"comment\": \"Excellent service. The technician was professional, punctual, and completed the job perfectly.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/reviews",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "reviews"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
