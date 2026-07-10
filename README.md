@@ -82,7 +82,7 @@ FixItNow addresses this business problem by:
 > [!NOTE]  
 > Below are the official URLs mapped from the project repository configs:
 - **DrawSQL ERD Design**: [DrawSQL - FixItNow ERD](https://drawsql.app/teams/ayansujon/diagrams/fixitnow-erd)
-- **Prisma Console Dashboard**: [Live API Link](https://fixitnow-v1.vercel.app/)
+- **FixItNow live link**: [Live API Link](https://fixitnow-v1.vercel.app/)
 - **Postman API Collection**: [Postman Collection Workspace](https://github.com/AyanSujon/FixItNow-Server-Side/blob/main/FixItNow.postman_collection%20(1).json)
 
 ---
