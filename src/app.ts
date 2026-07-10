@@ -14,6 +14,7 @@ import { servicesRoutes } from "./modules/services/services.route";
 import { bookingsRoutes } from "./modules/bookings/bookings.route";
 import { paymentsRoutes } from "./modules/payments/payments.route";
 import { stripe } from "./lib/stripe";
+import { reviewsRoutes } from "./modules/reviews/reviews.route";
 
 
 const app: Application = express();
@@ -123,7 +124,7 @@ app.use("/api/bookings", bookingsRoutes);
 app.use("/api/payments", paymentsRoutes);
 
 
-
+app.use("/api/reviews", reviewsRoutes);
 
 
 
