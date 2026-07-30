@@ -173,6 +173,24 @@ const getAllServicesFromDB = async (filter: IServiceQuery) => {
 
 
 
+const getSingleServiceByIdFromDB =async (serviceId: string) => {
+  const getSingleService = await prisma.service.findUnique({
+    where: {
+      id: serviceId,
+    },
+    include:{
+     category: true,
+     bookingSlots: true
+    }
+  });
+
+  return getSingleService;
+};
+
+
+
+
+
 
 
 
@@ -189,5 +207,6 @@ const getAllServicesFromDB = async (filter: IServiceQuery) => {
 
 export const servicesService = {
   createServiceInDB,
-  getAllServicesFromDB
+  getAllServicesFromDB,
+  getSingleServiceByIdFromDB
 }

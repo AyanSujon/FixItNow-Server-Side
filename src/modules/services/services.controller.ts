@@ -67,9 +67,47 @@ const getAllServices = catchAsync(async (req: Request, res: Response, next: Next
 })
 
 
+
+
+
+
+
+const getSingleServiceById = catchAsync(async(req: Request, res: Response, next: NextFunction)=>{
+
+    const serviceId = req.params.id;
+
+    
+    const getServiceDetails = await servicesService.getSingleServiceByIdFromDB(serviceId as string);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: HttpStatus.OK,
+      message: "Service Details patched successfully",
+      data: getServiceDetails,
+    });
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export const servicesController = {
     createService,
     getAllServices,
+    getSingleServiceById
 
 
 }
