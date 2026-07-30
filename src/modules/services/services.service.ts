@@ -82,6 +82,7 @@ const createServiceInDB = async (payload: IService, userid: string) => {
 
 
 // Filter by: 
+// GET /api/services?searchTerm=AC
 // GET /api/services?categoryId=ed5696f7-a920-49cd-8afa-287f0aa78db8
 // GET /api/services?city=Dhaka
 // GET /api/services?district=Chattogram
@@ -91,6 +92,7 @@ const createServiceInDB = async (payload: IService, userid: string) => {
 
 const getAllServicesFromDB = async (filter: IServiceQuery) => {
   const {
+    searchTerm,
     categoryId,
     minRating,
     address,
@@ -105,6 +107,12 @@ const getAllServicesFromDB = async (filter: IServiceQuery) => {
 
   const where = {
     ...(categoryId && { categoryId }),
+      ...(searchTerm && {
+    title: {
+      contains: searchTerm,
+      mode: "insensitive" as const,
+    },
+  }),
 
     ...((address || city || district) && {
       technician: {
