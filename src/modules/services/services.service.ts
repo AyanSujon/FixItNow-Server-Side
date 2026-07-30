@@ -180,7 +180,11 @@ const getSingleServiceByIdFromDB =async (serviceId: string) => {
     },
     include:{
      category: true,
-     bookingSlots: true
+     bookingSlots: {
+        where: {
+          isAvailable: true,
+        },
+     }
     }
   });
 
