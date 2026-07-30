@@ -103,7 +103,7 @@ const getAllServicesFromDB = async (filter: IServiceQuery) => {
   } = filter;
 
   const currentPage = Number(page) || 1;
-  const perPage = Number(limit) || 10;
+  const perPage = Number(limit) || 9;
 
   const where = {
     ...(categoryId && { categoryId }),
