@@ -123,6 +123,29 @@ const getTechnicianByIdFromDB = async (id: string) => {
 };
 
 
+const getTechnicianProfileByIdFromDB = async (id: string) => {
+
+
+  const technician = await prisma.technicianProfile.findUnique({
+    where: {
+      id: id,
+    },
+    include: {
+      user: {
+        omit: {
+          password: true
+          
+        }
+      }
+    },
+
+  })
+  
+  return technician;
+
+};
+
+
 
 
 
@@ -372,7 +395,8 @@ export const techniciansService = {
     createAvailabilitySlotsInDB,
     updateTechnicianProfileinDB,
 getTechnicianOwnBookingsFromDB,
-updateBookingStatusIntoDB
+updateBookingStatusIntoDB,
+getTechnicianProfileByIdFromDB
 
 }
 

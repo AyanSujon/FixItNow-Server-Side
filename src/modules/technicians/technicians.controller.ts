@@ -72,13 +72,28 @@ const getTechnicianById = catchAsync(
     sendResponse(res, {
       success: true,
       statusCode: HttpStatus.OK,
-      message: "technician profile fetched successfully.",
+      message: "technician fetched successfully.",
       data: { technician },
     });
   })
 
 
 
+const getTechnicianProfileById = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+
+
+
+    const technician = await techniciansService.getTechnicianProfileByIdFromDB(id as string);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: HttpStatus.OK,
+      message: "technician profile fetched successfully.",
+      data: { technician },
+    });
+  })
 
 
 
@@ -258,7 +273,8 @@ export const techniciansController = {
   createAvailabilitySlots,
   updateTechnicianProfile,
   getTechnicianOwnBookings,
-  updateBookingStatus
+  updateBookingStatus,
+  getTechnicianProfileById,
 
 
 };

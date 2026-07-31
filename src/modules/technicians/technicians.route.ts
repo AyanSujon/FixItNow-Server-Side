@@ -27,5 +27,9 @@ router.patch("/bookings/:id", auth(Role.TECHNICIAN), techniciansController.updat
 
 
 router.get("/:id", techniciansController.getTechnicianById);
+router.get("/:id/profile", techniciansController.getTechnicianProfileById);
+
+
+
 export const techniciansRoutes = router;
 
