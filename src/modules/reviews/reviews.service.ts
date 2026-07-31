@@ -91,6 +91,28 @@ const createReviewInDB = async (
 
 
 
+const getAllReviewsFromDB = async () => {
+  const reviews = await prisma.review.findMany({
+    include: {
+      technician: true,
+      booking: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return reviews;
+};
+
+
+
+
+
+
+
+
 export const reviewsService = {
-    createReviewInDB
+    createReviewInDB,
+    getAllReviewsFromDB
 }

@@ -15,6 +15,8 @@ const router = Router();
 
 router.post("/", auth(Role.CUSTOMER), reviewsController.createReview);
 
+router.get("/", auth(Role.CUSTOMER, Role.TECHNICIAN, Role.ADMIN), reviewsController.getAllReviews);
+
 
 
 

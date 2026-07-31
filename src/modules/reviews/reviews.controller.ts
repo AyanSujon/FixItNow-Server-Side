@@ -30,6 +30,20 @@ const createReview = catchAsync(async(req: Request, res: Response, next: NextFun
 
 
 
+const getAllReviews = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const reviews = await reviewsService.getAllReviewsFromDB();
+
+    sendResponse(res, {
+      success: true,
+      statusCode: HttpStatus.OK,
+      message: "Reviews fetched successfully.",
+      data: reviews,
+    });
+  }
+);
+
+
 
 
 
@@ -48,5 +62,5 @@ const createReview = catchAsync(async(req: Request, res: Response, next: NextFun
 
 export const reviewsController= {
     createReview,
-
+getAllReviews
 }
