@@ -91,26 +91,91 @@ const createReviewInDB = async (
 
 
 
-const getAllReviewsFromDB = async () => {
+// const getAllReviewsFromDB = async () => {
+//   const reviews = await prisma.review.findMany({
+//     include: {
+//       technician: true,
+//       booking: true,
+//     },
+//     orderBy: {
+//       createdAt: "desc",
+//     },
+//   });
+
+//   return reviews;
+// };
+
+
+
+// const getAllReviewsFromDB = async (customerId: string) => {
+//   return prisma.review.findMany({
+//     where: {
+//       customerId,
+//     },
+//     include: {
+//       technician: {
+//         select: {
+//           id: true,
+//           profilePhoto: true,
+//           user: {
+//             select: {
+//               name: true,
+//               email: true,
+//               phone: true,
+//             },
+//           },
+//         },
+//       },
+//       service: {
+//         select: {
+//           title: true,
+//         },
+//       },
+//     },
+//     orderBy: {
+//       createdAt: "desc",
+//     },
+//   });
+// };
+
+
+
+
+const getAllReviewsFromDB = async (customerId: string) => {
   const reviews = await prisma.review.findMany({
+    where: {
+      customerId,
+    },
     include: {
-      technician: true,
-      booking: true,
+      technician: {
+        select: {
+          id: true,
+          profilePhoto: true,
+          user: {
+            select: {
+              name: true,
+              email: true,
+              phone: true,
+            },
+          },
+        },
+      },
+      service: {
+        select: {
+          title: true,
+        },
+      },
     },
     orderBy: {
       createdAt: "desc",
     },
   });
 
-  return reviews;
+  return reviews.map(({ service, serviceId, ...review }) => ({
+    ...review,
+    title: service?.title ?? null,
+  }));
 };
-
-
-
-
-
-
-
 
 export const reviewsService = {
     createReviewInDB,
