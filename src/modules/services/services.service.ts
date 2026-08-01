@@ -1,6 +1,6 @@
 import { Prisma } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
-import { IService, IServiceQuery } from "./services.interface";
+import { IEditService, IService, IServiceQuery } from "./services.interface";
 
 
 const createServiceInDB = async (payload: IService, userid: string) => {
@@ -230,13 +230,95 @@ const getAllServicesByTechnicianIdFromDB = async (technicianId: string) => {
 
 
 
+// const EditServiceByTechnicianIdFromDB = async (
+//   technicianId: string,
+//   payload: IEditService
+// ) => {
+//   const { serviceId, categoryId, ...updateData } = payload;
+//   console.log(payload, "payload");
+
+//   // Check ownership
+//   const service = await prisma.service.findFirst({
+//     where: {
+//       id: serviceId,
+//       technicianId,
+//     },
+//   });
+
+//   if (!service) {
+//     throw new Error("Service not found or unauthorized.");
+//   }
+
+//   const updatedService = await prisma.service.update({
+//     where: {
+//       id: serviceId,
+//     },
+//     data: {
+//       ...updateData,
+
+//       // ...(categoryId && {
+//       //   category: {
+//       //     connect: {
+//       //       id: categoryId,
+//       //     },
+//       //   },
+//       // }),
+//     },
+//     include: {
+//       category: true
+//     },
+//   });
+
+//   return updatedService;
+// };
 
 
 
+const EditServiceByTechnicianIdFromDB = async (
+  technicianId: string,
+  payload: IEditService
+) => {
+  const { serviceId, categoryId, ...updateData } = payload;
 
+  // Check service ownership
+  const service = await prisma.service.findFirst({
+    where: {
+      id: serviceId,
+      technicianId,
+    },
+  });
 
+  if (!service) {
+    throw new Error("Service not found or unauthorized.");
+  }
 
+  // Check if category exists
+  const category = await prisma.category.findUnique({
+    where: {
+      id: categoryId,
+    },
+  });
 
+  if (!category) {
+    throw new Error("Category not found.");
+  }
+
+  const updatedService = await prisma.service.update({
+    where: {
+      id: serviceId,
+    },
+    data: {
+      ...updateData,
+      categoryId,
+    },
+    include: {
+      category: true,
+      technician: true,
+    },
+  });
+
+  return updatedService;
+};
 
 
 
@@ -247,4 +329,5 @@ export const servicesService = {
   getAllServicesFromDB,
   getSingleServiceByIdFromDB,
   getAllServicesByTechnicianIdFromDB,
+  EditServiceByTechnicianIdFromDB,
 }

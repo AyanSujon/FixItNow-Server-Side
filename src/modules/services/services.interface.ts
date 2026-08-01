@@ -38,3 +38,17 @@ export interface IServiceQuery {
   sortBy?: "price" | "averageRating" | "createdAt";
   sortOrder?: "asc" | "desc";
 }
+
+
+
+export interface IEditService {
+  serviceId: string;
+  categoryId?: string;
+  title?: string;
+  description?: string;
+  price?: number;
+  priceType?: PriceType;
+  estimatedDuration?: number;
+  thumbnail?: string;
+  isAvailable?: boolean;
+}

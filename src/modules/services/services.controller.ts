@@ -106,7 +106,23 @@ const getAllServiceByTechnicianId = catchAsync(async(req: Request, res: Response
 
 
 
+const EditServiceByTechnicianId = catchAsync(async(req: Request, res: Response, next: NextFunction)=>{
 
+    const technicianId = req.params.id; 
+    // const serviceId = req.params.serviceId;
+
+    const payload = req.body;
+
+    const UpdatedServices = await servicesService.EditServiceByTechnicianIdFromDB(technicianId as string, payload);
+    
+    sendResponse(res, {
+      success: true,
+      statusCode: HttpStatus.OK,
+      message: "Service Details edited successfully",
+      data: UpdatedServices,
+    });
+
+})
 
 
 
@@ -125,6 +141,7 @@ export const servicesController = {
     getAllServices,
     getSingleServiceById,
    getAllServiceByTechnicianId,
+   EditServiceByTechnicianId,
 
 
 }
