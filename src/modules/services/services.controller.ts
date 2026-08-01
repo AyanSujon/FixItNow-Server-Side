@@ -88,6 +88,22 @@ const getSingleServiceById = catchAsync(async(req: Request, res: Response, next:
 })
 
 
+const getAllServiceByTechnicianId = catchAsync(async(req: Request, res: Response, next: NextFunction)=>{
+
+    const technicianId = req.params.id;
+
+    
+    const getAllServices = await servicesService.getAllServicesByTechnicianIdFromDB(technicianId as string);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: HttpStatus.OK,
+      message: "Service Details retrieved successfully",
+      data: getAllServices,
+    });
+})
+
+
 
 
 
@@ -107,7 +123,8 @@ const getSingleServiceById = catchAsync(async(req: Request, res: Response, next:
 export const servicesController = {
     createService,
     getAllServices,
-    getSingleServiceById
+    getSingleServiceById,
+   getAllServiceByTechnicianId,
 
 
 }

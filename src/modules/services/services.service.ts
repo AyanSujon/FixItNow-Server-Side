@@ -193,6 +193,26 @@ const getSingleServiceByIdFromDB =async (serviceId: string) => {
 
 
 
+const getAllServicesByTechnicianIdFromDB =async (technicianId: string) => {
+  const getAllServices = await prisma.service.findMany({
+    where: {
+      technicianId,
+    },
+    include:{
+     category: true,
+     bookingSlots: {
+        where: {
+          isAvailable: true,
+        },
+     }
+    }
+  });
+
+  return getAllServices;
+};
+
+
+
 
 
 
@@ -212,5 +232,6 @@ const getSingleServiceByIdFromDB =async (serviceId: string) => {
 export const servicesService = {
   createServiceInDB,
   getAllServicesFromDB,
-  getSingleServiceByIdFromDB
+  getSingleServiceByIdFromDB,
+  getAllServicesByTechnicianIdFromDB,
 }
