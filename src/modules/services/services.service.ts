@@ -107,12 +107,12 @@ const getAllServicesFromDB = async (filter: IServiceQuery) => {
 
   const where = {
     ...(categoryId && { categoryId }),
-      ...(searchTerm && {
-    title: {
-      contains: searchTerm,
-      mode: "insensitive" as const,
-    },
-  }),
+    ...(searchTerm && {
+      title: {
+        contains: searchTerm,
+        mode: "insensitive" as const,
+      },
+    }),
 
     ...((address || city || district) && {
       technician: {
@@ -148,9 +148,13 @@ const getAllServicesFromDB = async (filter: IServiceQuery) => {
 
   const services = await prisma.service.findMany({
     where,
+
     include: {
       category: true,
       technician: true,
+    },
+    orderBy: {
+      createdAt: "desc",
     },
     skip: (currentPage - 1) * perPage,
     take: perPage,
@@ -173,18 +177,18 @@ const getAllServicesFromDB = async (filter: IServiceQuery) => {
 
 
 
-const getSingleServiceByIdFromDB =async (serviceId: string) => {
+const getSingleServiceByIdFromDB = async (serviceId: string) => {
   const getSingleService = await prisma.service.findUnique({
     where: {
       id: serviceId,
     },
-    include:{
-     category: true,
-     bookingSlots: {
+    include: {
+      category: true,
+      bookingSlots: {
         where: {
           isAvailable: true,
         },
-     }
+      }
     }
   });
 
@@ -193,18 +197,27 @@ const getSingleServiceByIdFromDB =async (serviceId: string) => {
 
 
 
-const getAllServicesByTechnicianIdFromDB =async (technicianId: string) => {
+const getAllServicesByTechnicianIdFromDB = async (technicianId: string) => {
   const getAllServices = await prisma.service.findMany({
     where: {
       technicianId,
     },
-    include:{
-     category: true,
-     bookingSlots: {
+    include: {
+      category: true,
+      _count: {
+        select: {
+          reviews: true,
+        },
+      },
+      bookingSlots: {
         where: {
           isAvailable: true,
         },
-     }
+      },
+
+    },
+    orderBy: {
+      createdAt: "desc",
     }
   });
 
