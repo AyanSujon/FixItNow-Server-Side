@@ -199,8 +199,8 @@ const getAllBookingsFromDB = async () => {
   const bookings = await prisma.booking.findMany({
     include: {
       customer: true,
-      technician: true,
-      service: true,
+      // technician: true,
+      // service: true,
       bookingSlots: true,
     },
     orderBy: {
@@ -282,6 +282,57 @@ const updateBookingStatusByIdFromDB = async (
 
 
 
+// const getAllBookingsByTechnicianFromDB = async () => {
+//   const bookings = await prisma.booking.findMany({
+//     include: {
+//       customer: true,
+//       // technician: true,
+//       // service: true,
+//       bookingSlots: true,
+//     },
+//     orderBy: {
+//       createdAt: "desc",
+//     },
+//   });
+
+//   return bookings;
+// };
+
+
+
+
+
+
+const getAllBookingsByTechnicianFromDB = async (
+  technicianId: string
+) => {
+  const bookings = await prisma.booking.findMany({
+    where: {
+      technicianId,
+    },
+    include: {
+      customer: true,
+      bookingSlots: true,
+      // technician: true,
+      // service: true,
+      // payment: true,
+      // review: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return bookings;
+};
+
+
+
+
+
+
+
+
 
 
 
@@ -293,6 +344,7 @@ export const bookingsService = {
   getAllBookingsFromDB,
   getBookingsByIdFromDB,
   updateBookingStatusByIdFromDB,
+  getAllBookingsByTechnicianFromDB
 
 
 }

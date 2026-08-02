@@ -96,6 +96,43 @@ const updateBookingStatusById = catchAsync(
 
 
 
+// const getAllBookingsByTechnician = catchAsync(
+//   async (req: Request, res: Response, next: NextFunction) => {
+//     const bookings = await bookingsService.getAllBookingsByTechnicianFromDB();
+
+//     sendResponse(res, {
+//       success: true,
+//       statusCode: HttpStatus.OK,
+//       message: "Bookings fetched successfully.",
+//       data: bookings,
+//     });
+//   }
+// );
+
+
+
+
+
+
+const getAllBookingsByTechnician = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { technicianId } = req.params;
+
+    const bookings =
+      await bookingsService.getAllBookingsByTechnicianFromDB(technicianId as string);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: HttpStatus.OK,
+      message: "Bookings fetched successfully.",
+      data: bookings,
+    });
+  }
+);
+
+
+
+
 
 
 
@@ -106,4 +143,5 @@ export const bookingsController = {
   getAllBookings,
   getBookingsById,
   updateBookingStatusById,
+  getAllBookingsByTechnician
 }
