@@ -5,28 +5,28 @@ import HttpStatus from "http-status";
 import { bookingsService } from "./bookings.service";
 
 
-const createBookings = catchAsync(async(req: Request, res: Response, next: NextFunction)=>{
+const createBookings = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
 
-     if (!req.user) {
-        throw new Error("Unauthorized");
-    }
+  if (!req.user) {
+    throw new Error("Unauthorized");
+  }
 
-    const customerId = req.user?.id;
-
-
-    const payload = req.body; 
-
-    const createdBooking = await bookingsService.createBookingInDB(payload, customerId);
+  const customerId = req.user?.id;
 
 
+  const payload = req.body;
+
+  const createdBooking = await bookingsService.createBookingInDB(payload, customerId);
 
 
-    sendResponse(res, {
-        success: true,
-        message: "Your Booking created successfully.", 
-        statusCode: HttpStatus.CREATED,
-        data: createdBooking,
-    })
+
+
+  sendResponse(res, {
+    success: true,
+    message: "Your Booking created successfully.",
+    statusCode: HttpStatus.CREATED,
+    data: createdBooking,
+  })
 
 })
 
@@ -67,6 +67,21 @@ const getBookingsById = catchAsync(
 
 
 
+const updateBookingStatusById = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    const payload = req.body;
+
+    const updateBooking = await bookingsService.updateBookingStatusByIdFromDB(id as string, payload);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: HttpStatus.OK,
+      message: "Booking status updated successfully.",
+      data: updateBooking,
+    });
+  }
+);
 
 
 
@@ -83,9 +98,12 @@ const getBookingsById = catchAsync(
 
 
 
-export const bookingsController ={
-    createBookings,
-    getAllBookings,
-    getBookingsById,
 
+
+
+export const bookingsController = {
+  createBookings,
+  getAllBookings,
+  getBookingsById,
+  updateBookingStatusById,
 }

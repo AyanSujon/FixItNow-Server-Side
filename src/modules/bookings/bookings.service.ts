@@ -1,3 +1,4 @@
+import { BookingStatus } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 import { IBooking } from "./bookings.interface"
 
@@ -240,11 +241,58 @@ const getBookingsByIdFromDB = async (id: string) => {
 
 
 
+// const updateBookingStatusByIdFromDB =async (id: string, payload: { status: string }) => {}
+
+
+
+
+const updateBookingStatusByIdFromDB = async (
+  id: string,
+  payload: {
+    status: BookingStatus;
+  }
+) => {
+  const booking = await prisma.booking.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!booking) {
+    throw new Error("Booking not found");
+  }
+
+  const updatedBooking = await prisma.booking.update({
+    where: {
+      id,
+    },
+    data: {
+      status: payload.status,
+    },
+  });
+
+  return updatedBooking;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export const bookingsService = {
   createBookingInDB,
   getAllBookingsFromDB,
   getBookingsByIdFromDB,
+  updateBookingStatusByIdFromDB,
 
 
 }
