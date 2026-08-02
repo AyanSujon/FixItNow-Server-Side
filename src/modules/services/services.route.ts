@@ -14,6 +14,7 @@ router.get("/", servicesController.getAllServices);
 router.get("/:id", servicesController.getSingleServiceById)
 router.get("/technician/:id", auth(Role.TECHNICIAN), servicesController.getAllServiceByTechnicianId)
 router.patch("/technician/:id/edit", auth(Role.TECHNICIAN), servicesController.EditServiceByTechnicianId)
+router.delete("/technician/:id/delete", auth(Role.TECHNICIAN), servicesController.deleteServiceByTechnicianId)
 
 
 

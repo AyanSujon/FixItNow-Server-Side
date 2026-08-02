@@ -124,6 +124,25 @@ const EditServiceByTechnicianId = catchAsync(async(req: Request, res: Response, 
 
 })
 
+// delete service by technician id
+const deleteServiceByTechnicianId = catchAsync(async(req: Request, res: Response, next: NextFunction)=>{
+
+    const technicianId = req.params.id; 
+    // const serviceId = req.params.serviceId;
+
+    const payload = req.body;
+
+    const deletedServices = await servicesService.deleteServiceByTechnicianIdFromDB(technicianId as string, payload);
+    
+    sendResponse(res, {
+      success: true,
+      statusCode: HttpStatus.OK,
+      message: "Service deleted successfully",
+      data: deletedServices,
+    });
+
+})
+
 
 
 
@@ -142,6 +161,7 @@ export const servicesController = {
     getSingleServiceById,
    getAllServiceByTechnicianId,
    EditServiceByTechnicianId,
+   deleteServiceByTechnicianId,
 
 
 }

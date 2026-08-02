@@ -324,10 +324,113 @@ const EditServiceByTechnicianIdFromDB = async (
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+// delete service by technician id and service id
+const deleteServiceByTechnicianIdFromDB = async (
+  technicianId: string,
+  payload: {
+    serviceId: string;
+  }
+) => {
+  const { serviceId } = payload;
+
+  // Check if the service exists and belongs to the technician
+  const existingService = await prisma.service.findFirst({
+    where: {
+      id: serviceId,
+      technicianId,
+    },
+  });
+
+  if (!existingService) {
+    throw new Error("Service not found");
+  }
+
+  const deletedService = await prisma.$transaction(async (tx) => {
+    // Get all bookings for this service
+    const bookings = await tx.booking.findMany({
+      where: {
+        serviceId,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    const bookingIds = bookings.map((booking) => booking.id);
+
+    // Delete reviews related to the bookings
+    if (bookingIds.length > 0) {
+      await tx.review.deleteMany({
+        where: {
+          bookingId: {
+            in: bookingIds,
+          },
+        },
+      });
+    }
+
+    // Delete bookings
+    await tx.booking.deleteMany({
+      where: {
+        serviceId,
+      },
+    });
+
+    // Delete booking slots
+    await tx.bookingSlot.deleteMany({
+      where: {
+        serviceId,
+      },
+    });
+
+    // Delete the service
+    return await tx.service.delete({
+      where: {
+        id: serviceId,
+      },
+    });
+  });
+
+  return deletedService;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export const servicesService = {
   createServiceInDB,
   getAllServicesFromDB,
   getSingleServiceByIdFromDB,
   getAllServicesByTechnicianIdFromDB,
   EditServiceByTechnicianIdFromDB,
+  deleteServiceByTechnicianIdFromDB,
 }
