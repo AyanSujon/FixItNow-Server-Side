@@ -11,7 +11,7 @@ const router = Router();
 
 
 router.post("/create", auth(Role.CUSTOMER), bookingsController.createBookings);
-router.get("/", auth(Role.CUSTOMER, Role.TECHNICIAN), bookingsController.getAllBookings);
+router.get("/", auth(Role.CUSTOMER, Role.TECHNICIAN, Role.ADMIN), bookingsController.getAllBookings);
 router.get("/:id", auth(Role.CUSTOMER, Role.TECHNICIAN), bookingsController.getBookingsById);
 router.patch("/:id", auth(Role.TECHNICIAN), bookingsController.updateBookingStatusById);
 
