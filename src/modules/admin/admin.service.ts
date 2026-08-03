@@ -1,6 +1,6 @@
 
 
-import { userStatus } from "../../../generated/prisma/enums";
+import { ActiveStatus} from "../../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
 import { createServiceCategoryPlayload, UserFilters } from "./admin.interface";
 import HttpStatus from "http-status";
@@ -88,7 +88,7 @@ const getAllUserFromDB = async (filters: UserFilters) => {
 
 
 
-const updateUserStatus = async (id: string, userStatus: userStatus) => {
+const updateUserStatus = async (id: string, activeStatus: ActiveStatus) => {
 
   // Check if the user exists
   const user = await prisma.user.findUnique({
@@ -107,7 +107,7 @@ const updateUserStatus = async (id: string, userStatus: userStatus) => {
       id,
     },
     data: {
-      userStatus,
+      activeStatus,
     },
   });
 

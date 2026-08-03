@@ -3,8 +3,9 @@ import { catchAsync } from "../../utils/catchAsync"
 import { sendResponse } from "../../utils/sendResponse";
 import HttpStatus from "http-status";
 import { adminService } from "./admin.service";
-import { userStatus } from "../../../generated/prisma/enums";
+// import { userStatus } from "../../../generated/prisma/enums";
 import { createServiceCategoryPlayload } from "./admin.interface";
+import { ActiveStatus } from "../../../generated/prisma/client";
 
 
 
@@ -36,9 +37,9 @@ const getAllUsers = catchAsync(async (req: Request, res: Response, next: NextFun
 
 const UpdateUserStatus = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
-    const { userStatus } = req.body;
-
-    const result = await adminService.updateUserStatus(id as string, userStatus as userStatus);
+    const { activeStatus } = req.body;
+console.log(id, activeStatus, "from controller" )
+    const result = await adminService.updateUserStatus(id as string, activeStatus as ActiveStatus);
 
     sendResponse(res, {
         success: true,

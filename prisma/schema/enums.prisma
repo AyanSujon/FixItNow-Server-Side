@@ -5,10 +5,10 @@ enum ActiveStatus {
     BAN
     UNBAN
 }
-enum userStatus {
-    BAN
-    UNBAN
-}
+// enum userStatus {
+//     BAN
+//     UNBAN
+// }
 enum Role {
     CUSTOMER
     TECHNICIAN
