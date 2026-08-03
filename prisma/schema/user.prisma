@@ -1,3 +1,38 @@
+// model User {
+//     id           String       @id @default(uuid())
+//     name         String       @db.VarChar(255)
+//     email        String       @unique
+//     phone        String?      
+//     password     String
+//     activeStatus ActiveStatus @default(ACTIVE)
+//     role         Role         @default(CUSTOMER)
+//     isVerified   Boolean      @default(false)
+//     lastLoginAt  DateTime?
+//     userStatus   userStatus?
+
+//     createdAt DateTime @default(now())
+//     updatedAt DateTime @updatedAt
+
+//     technicianProfile TechnicianProfile?
+//     services          Service[]
+//     payments          Payment[]          @relation("CustomerPayments")
+
+//     reviews          Review[]  @relation("CustomerReviews")
+//     customerBookings Booking[] @relation("CustomerBookings")
+
+//     @@map("users")
+// }
+
+
+
+
+
+
+
+
+
+
+
 model User {
     id           String       @id @default(uuid())
     name         String       @db.VarChar(255)
@@ -8,7 +43,7 @@ model User {
     role         Role         @default(CUSTOMER)
     isVerified   Boolean      @default(false)
     lastLoginAt  DateTime?
-    userStatus   userStatus?
+    // userStatus   userStatus?
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
